@@ -26,9 +26,6 @@ abstract class Tree<Any extends Comparable<Any>> {
     int height(Node node) {
         if (node == null)
             return -1;
-        if (root == null) {
-            return 0;
-        }
         return node.height;
     }
 

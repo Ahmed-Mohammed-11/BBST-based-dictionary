@@ -1,7 +1,7 @@
 import java.util.*;
 
 abstract class Tree<Any extends Comparable<Any>> {
-    // Root node pointer. Will be null for an empty tree.
+    // node pointer and it will be null for an empty tree.
     class Node {
         Node left;
         Node right;

@@ -16,17 +16,6 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return temp;
     }
 
-    Node rotateLeftRight(Node node) {
-        node.left = leftRotateCaller(node.left);
-        return rightRotateCaller(node);
-    }
-
-    // the right left case
-    Node rotateRightLeft(Node node) {
-        node.right = rightRotateCaller(node.right);
-        return leftRotateCaller(node);
-    }
-
     @Override
     public void update(Node node) {
         // initialize the height to -1 (nothing)

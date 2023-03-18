@@ -17,28 +17,28 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // initializing the root node
-    Node root;
-    int size = 0;
+    protected Node root;
+    protected int size = 0;
     // list to store the tree in inorder traversal (testing purposes)
-    List<Any> tree = new ArrayList<Any>();
+    protected List<Any> tree = new ArrayList<Any>();
 
     // returns the height of the tree
-    int height() {
+    public int height() {
         if (root == null)
             return -1;
         return root.height;
     }
 
     // returns number of nodes in the tree
-    int size() {
+    public int size() {
         return size;
     }
 
-    boolean search(Any key) {
+    public boolean search(Any key) {
         return search(root, key);
     }
 
-    boolean search(Node node, Any key) {
+    protected boolean search(Node node, Any key) {
         // if the node is null, return false not found as the end of tree reached
         if (node == null)
             return false;
@@ -61,18 +61,18 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // to be overridden by the subclasses
-    abstract void update(Node node);
+    abstract protected void update(Node node);
 
-    abstract boolean insert(Any key);
+    abstract public boolean insert(Any key);
 
-    abstract boolean delete(Any key);
+    abstract public boolean delete(Any key);
 
-    abstract Node insert(Node node, Any key);
+    abstract protected Node insert(Node node, Any key);
 
-    abstract Node delete(Node node, Any key);
+    abstract protected Node delete(Node node, Any key);
 
     // the right right case
-    Node rotateLeft(Node node) {
+    protected Node rotateLeft(Node node) {
         Node temp = node.right;
         node.right = temp.left;
         temp.left = node;
@@ -80,7 +80,7 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // the left left case
-    Node rotateRight(Node node) {
+    protected Node rotateRight(Node node) {
         Node temp = node.left;
         node.left = temp.right;
         temp.right = node;
@@ -88,13 +88,13 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // the left right case
-    Node rotateLeftRight(Node node) {
+    protected Node rotateLeftRight(Node node) {
         node.left = rotateLeft(node.left);
         return rotateRight(node);
     }
 
     // the right left case
-    Node rotateRightLeft(Node node) {
+    protected Node rotateRightLeft(Node node) {
         node.right = rotateRight(node.right);
         return rotateLeft(node);
     }

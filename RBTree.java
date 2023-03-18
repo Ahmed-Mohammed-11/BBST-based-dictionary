@@ -1,6 +1,6 @@
 public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 {
-	RBNode nil;
+	protected RBNode nil;
 	class RBNode extends Node
 	{
 		boolean black;
@@ -34,7 +34,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	}
 
 	//Missing implementation
-	boolean insert(Any key)
+	public boolean insert(Any key)
 	{
 		RBNode current = (RBNode)root;
 		if (current == nil)
@@ -103,7 +103,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	}
 
 	//Fix Red black tree properties after delete
-	boolean delete(Any key)
+	public boolean delete(Any key)
 	{
 		RBNode current = (RBNode)root;
 		while(current != nil)
@@ -255,7 +255,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 
 	//Methods that won't be used.
 
-	Node delete(Node n, Any key){return null;}
-	Node insert(Node n, Any key){return null;}
-	void update(Node n){}
+	protected Node delete(Node n, Any key){return null;}
+	protected Node insert(Node n, Any key){return null;}
+	protected void update(Node n){}
 }

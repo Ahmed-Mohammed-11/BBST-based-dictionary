@@ -97,7 +97,6 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 				if (gpOnRight) rotateRight(z.p.p);
 				else rotateLeft(z.p.p);
 			}
-
 		}
 		RBNode r = (RBNode)root;
 		r.black = true;
@@ -135,13 +134,77 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		if (current == current.p.left) current.p.left = child;
 		else current.p.right = child;
 		child.p = current.p;
-		if (!current.black) deleteFixUp(current);
+		if (current.black) deleteFixUp(child);
 		return true;
 	}
 
-	void deleteFixUp(RBNode z)
+	void deleteFixUp(RBNode x)
 	{
+		while(x != root && x.black)
+		{
+			boolean leftLeaning = x == x.p.left;
+			RBNode s;
+			if (leftLeaning) s = (RBNode) x.p.right;
+			else s = (RBNode) x.p.left;
 
+			if (!s.black)
+			{
+				s.black = true;
+				x.p.black = false;
+				if (leftLeaning)
+				{
+					rotateLeft(x.p);
+					s = (RBNode)x.p.right;
+				}
+				else
+				{
+					rotateRight(x.p);
+					s = (RBNode) x.p.left;
+				}
+
+				if (((RBNode)s.left).black && ((RBNode)s.right).black)
+				{
+					s.black = false;
+					x = x.p;
+					continue;
+				}
+				else
+				{
+					if (leftLeaning && ((RBNode)s.right).black)
+					{
+						RBNode c = (RBNode) s.left;
+						c.black = true;
+						s.black = false;
+						rotateRight(s);
+						s = (RBNode)x.p.right;
+					}
+					else if (!leftLeaning && ((RBNode)s.left).black)
+					{
+						RBNode c = (RBNode) s.right;
+						c.black = true;
+						s.black = false;
+						rotateLeft(s);
+						s = (RBNode) x.p.left;
+					}
+					s.black = x.p.black;
+					x.p.black = true;
+					RBNode c;
+					if (leftLeaning)
+					{
+						c = (RBNode) s.right;
+						rotateLeft(x.p);
+					}
+					else
+					{
+						c = (RBNode) s.left;
+						rotateRight(x.p);
+					}
+					c.black = true;
+					x = (RBNode)root;
+				}
+			}
+		}
+		x.black = true;
 	}
 
 

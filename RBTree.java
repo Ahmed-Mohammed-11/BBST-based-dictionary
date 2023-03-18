@@ -69,14 +69,14 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	//Fix Red black tree properties after insert
 	void insertFixUp(RBNode z)
 	{
-		while (z.p.black == false)
+		while (!z.p.black)
 		{
 			RBNode uncle;
 
 			boolean gpOnRight = z.p.p.left == z.p;
 			if (gpOnRight) uncle = (RBNode)z.p.p.right;
 			else uncle = (RBNode)z.p.p.left;
-			if (uncle.black == false)
+			if (!uncle.black)
 			{
 				uncle.black = true;
 				z.p.black = true;
@@ -106,6 +106,36 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	//Fix Red black tree properties after delete
 	boolean delete(Any key)
 	{
+		RBNode current = (RBNode)root;
+		while(current != nil)
+		{
+			int compareResult = key.compareTo(current.key); 
+			if (compareResult < 0) current = (RBNode)current.left;
+			else if(compareResult > 0) current = (RBNode)current.right;
+			else break;
+		}
+		if (current == nil) return false;
+		
+		if (current.left != nil && current.right != nil) //current has 2 children
+		{
+			RBNode succ = (RBNode)current.right;
+			while(succ.left != nil) 
+				succ = (RBNode)succ.left;
+			
+			Any tmp =current.key;
+			current.key = succ.key;
+			succ.key = tmp;
+			current = succ;
+		}
+		//Now current has at most one real child.
+		RBNode child;
+		if (current.left == nil) child = (RBNode)current.right;
+		else child = (RBNode)current.left;
+		
+		if (current == current.p.left) current.p.left = child;
+		else current.p.right = child;
+		child.p = current.p;
+		if (!current.black) deleteFixUp(current);
 		return true;
 	}
 

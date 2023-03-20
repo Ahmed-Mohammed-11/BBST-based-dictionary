@@ -1,22 +1,25 @@
 public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
 
-    // caller to the rotateLeft method from tree class
-    Node leftRotateCaller(Node node) {
-        Node temp = rotateLeft(node);
+    // the right right case
+    Node rotateLeft(Node node) {
+        Node temp = node.right;
+        node.right = temp.left;
+        temp.left = node;
         update(node);
         update(temp);
         return temp;
     }
 
-    // caller to the rotateRight method from tree class
-    Node rightRotateCaller(Node node) {
-        Node temp = rotateRight(node);
+    // the left left case
+    Node rotateRight(Node node) {
+        Node temp = node.left;
+        node.left = temp.right;
+        temp.right = node;
         update(node);
         update(temp);
         return temp;
     }
 
-    @Override
     public void update(Node node) {
         // initialize the height to -1 (nothing)
         int leftHeight = -1;
@@ -41,21 +44,23 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         if (node.balanceFactor > 1) {
 
             if (node.left.balanceFactor < 0) {
-                node.left = leftRotateCaller(node.left);
+                node.left = rotateLeft(node.left);
             }
-            return rightRotateCaller(node);
+
+            return rotateRight(node);
 
         } else if (node.balanceFactor < -1) {
+
             if (node.right.balanceFactor > 0) {
-                node.right = rightRotateCaller(node.right);
+                node.right = rotateRight(node.right);
             }
-            return leftRotateCaller(node);
+
+            return rotateLeft(node);
 
         }
         return node;
     }
 
-    @Override
     public Node insert(Node node, Any key) {
         // if the node is null, return a new node with the key
         if (node == null)
@@ -78,7 +83,6 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return rebalance(node);
     }
 
-    @Override
     public boolean insert(Any key) {
         // if the key is null, return false
 
@@ -97,7 +101,6 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return false;
     }
 
-    @Override
     public boolean delete(Any key) {
         // if the key is null then return false
         if (key == null) {
@@ -115,7 +118,6 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return false;
     }
 
-    @Override
     public Node delete(Node node, Any key) {
         // if the node is null then return null (base case)
         if (node == null) {

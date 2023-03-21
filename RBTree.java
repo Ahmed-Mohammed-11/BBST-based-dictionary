@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 {
@@ -32,21 +31,23 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 
 	RBTree()
 	{
-		nil = new RBNode(null);
+		nil = new RBNode(null, true);
 		root = nil;
 	}
 
 	public int height()
 	{
-		// Stack s = new Stack();
-		// s.push(root)
-		// int longestHeight = 0;
-		// while (!s.isEmpty())
-		// {
-		// 	int height = 1;
-		// }
-		return 0;
+		
+		return height(root);
 	}
+
+	private int height(Node n)
+	{
+		if (n == nil) return 0;
+		int hl = height(n.left), hr = height(n.right);
+		return hl > hr ? hl+1 : hr+1;
+	}
+
 
 	
 	public boolean insert(Any key)
@@ -151,6 +152,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		if (current == current.p.left) current.p.left = child;
 		else current.p.right = child;
 		child.p = current.p;
+		if (current == root) root = child;
 		if (current.black) deleteFixUp(child);
 		size--;
 		return true;

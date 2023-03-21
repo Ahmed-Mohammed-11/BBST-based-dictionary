@@ -2,7 +2,7 @@ import java.util.*;
 
 abstract class Tree<Any extends Comparable<Any>> {
     // Root node pointer. Will be null for an empty tree.
-    class Node {
+    protected class Node {
         Node left;
         Node right;
         int balanceFactor;
@@ -17,28 +17,28 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // initializing the root node
-    Node root;
+    protected Node root;
     int size = 0;
     // list to store the tree in inorder traversal (testing purposes)
     List<Any> tree = new ArrayList<Any>();
 
     // returns the height of the tree
-    int height() {
+    public int height() {
         if (root == null)
             return -1;
         return root.height;
     }
 
     // returns number of nodes in the tree
-    int size() {
+    public int size() {
         return size;
     }
 
-    boolean search(Any key) {
+    public boolean search(Any key) {
         return search(root, key);
     }
 
-    boolean search(Node node, Any key) {
+    protected boolean search(Node node, Any key) {
         // if the node is null, return false not found as the end of tree reached
         if (node == null)
             return false;
@@ -61,23 +61,23 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // to be overridden by the subclasses
-    abstract void update(Node node);
+    protected abstract void update(Node node);
 
-    abstract boolean insert(Any key);
+    protected abstract boolean insert(Any key);
 
-    abstract boolean delete(Any key);
+    protected abstract boolean delete(Any key);
 
-    abstract Node insert(Node node, Any key);
+    protected abstract Node insert(Node node, Any key);
 
-    abstract Node delete(Node node, Any key);
+    protected abstract Node delete(Node node, Any key);
 
-    abstract Node rotateLeft(Node node);
+    protected abstract Node rotateLeft(Node node);
 
-    abstract Node rotateRight(Node node);
+    protected abstract Node rotateRight(Node node);
 
     // just driver function for the printTree(Node node) function to give the client
     // interface to print the tree
-    void printTree() {
+    public void printTree() {
         // clear the tree list before printing the tree to avoid duplicates
         if (tree.size() > 0) {
             tree.clear();
@@ -86,7 +86,7 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // prints the tree in sorted order (inorder traversal)
-    List<Any> printTree(Node node) {
+    protected List<Any> printTree(Node node) {
         if (node != null) {
             printTree(node.left);
             tree.add(node.key);

@@ -116,7 +116,10 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 				else rotateLeft(z.p.p);
 			}
 		}
+
 		RBNode r = (RBNode)root;
+		// while (r.p != nil) r = r.p;
+		// root = r;
 		r.black = true;
 	}
 
@@ -152,7 +155,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		if (current == current.p.left) current.p.left = child;
 		else current.p.right = child;
 		child.p = current.p;
-		if (current == root) root = child;
+		// if (current == root) root = child;
 		if (current.black) deleteFixUp(child);
 		size--;
 		return true;
@@ -248,6 +251,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		n.p = child;
 		n.right = newChild;
 		newChild.p = n;
+		if (root == n) root = child;
 	}
 
 	void rotateRight(RBNode n)
@@ -269,6 +273,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		n.p = child;
 		n.left = newChild;
 		newChild.p = n;
+		if (root == n) root = child;
 	}
 
 
@@ -309,7 +314,12 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 
 	public void printTree()
 	{
-		System.out.println(getKeysAscending());
+		ArrayList<Any> keys = getKeysAscending();
+		for (Any i: keys)
+		{
+			System.out.print(i + " ");
+		}
+		System.out.println();
 	}
 
 

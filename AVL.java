@@ -162,7 +162,7 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return rebalance(node);
     }
 
-    public static void main(String[] args) {
+
 
         // uncomment this code for testing purposes
 
@@ -246,4 +246,3 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
          * [11, 13, 15, 19, 22, 27, 34]
          */
     }
-}

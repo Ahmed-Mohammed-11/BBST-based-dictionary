@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 {
 	protected RBNode nil;
@@ -33,7 +36,19 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		root = nil;
 	}
 
-	//Missing implementation
+	public int height()
+	{
+		// Stack s = new Stack();
+		// s.push(root)
+		// int longestHeight = 0;
+		// while (!s.isEmpty())
+		// {
+		// 	int height = 1;
+		// }
+		return 0;
+	}
+
+	
 	public boolean insert(Any key)
 	{
 		RBNode current = (RBNode)root;
@@ -44,6 +59,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 			current.right = nil;
 			current.left = nil;
 			root = current;
+			size++;
 			return true;
 		}
 		RBNode lastNode = null;
@@ -63,11 +79,12 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		else lastNode.right = newNode;
 		
 		insertFixUp(newNode);
+		size++;
 		return true;
 	}
 
 	//Fix Red black tree properties after insert
-	void insertFixUp(RBNode z)
+	protected void insertFixUp(RBNode z)
 	{
 		while (!z.p.black)
 		{
@@ -135,10 +152,11 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		else current.p.right = child;
 		child.p = current.p;
 		if (current.black) deleteFixUp(child);
+		size--;
 		return true;
 	}
 
-	void deleteFixUp(RBNode x)
+	protected void deleteFixUp(RBNode x)
 	{
 		while(x != root && x.black)
 		{
@@ -252,6 +270,39 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	}
 
 
+	public ArrayList<Any> getKeysAscending()
+	{
+		ArrayList<Any> keys = new ArrayList<Any>(size);
+		inOrderTraverse(root, keys, true);
+		
+		return keys;
+	}
+	
+	public ArrayList<Any> getKeysDescending()
+	{
+		ArrayList<Any> keys = new ArrayList<Any>(size);
+		inOrderTraverse(root, keys, false);
+		
+		return keys;
+	}
+
+	private void inOrderTraverse(Node n, ArrayList<Any> list, boolean ascending)
+	{
+		if (n == nil) return;
+		if (ascending)
+		{
+			inOrderTraverse(n.left, list, ascending);
+			list.add(n.key);
+			inOrderTraverse(n.right, list, ascending);
+		}
+		else
+		{
+			inOrderTraverse(n.right, list, ascending);
+			list.add(n.key);
+			inOrderTraverse(n.left, list, ascending);
+			
+		}
+	}
 
 	//Methods that won't be used.
 

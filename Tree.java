@@ -17,28 +17,28 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // initializing the root node
-    protected Node root;
-    protected int size = 0;
+    Node root;
+    int size = 0;
     // list to store the tree in inorder traversal (testing purposes)
-    protected List<Any> tree = new ArrayList<Any>();
+    List<Any> tree = new ArrayList<Any>();
 
     // returns the height of the tree
-    public int height() {
+    int height() {
         if (root == null)
             return -1;
         return root.height;
     }
 
     // returns number of nodes in the tree
-    public int size() {
+    int size() {
         return size;
     }
 
-    public boolean search(Any key) {
+    boolean search(Any key) {
         return search(root, key);
     }
 
-    protected boolean search(Node node, Any key) {
+    boolean search(Node node, Any key) {
         // if the node is null, return false not found as the end of tree reached
         if (node == null)
             return false;
@@ -61,43 +61,19 @@ abstract class Tree<Any extends Comparable<Any>> {
     }
 
     // to be overridden by the subclasses
-    abstract protected void update(Node node);
+    abstract void update(Node node);
 
-    abstract public boolean insert(Any key);
+    abstract boolean insert(Any key);
 
-    abstract public boolean delete(Any key);
+    abstract boolean delete(Any key);
 
-    abstract protected Node insert(Node node, Any key);
+    abstract Node insert(Node node, Any key);
 
-    abstract protected Node delete(Node node, Any key);
+    abstract Node delete(Node node, Any key);
 
-    // the right right case
-    protected Node rotateLeft(Node node) {
-        Node temp = node.right;
-        node.right = temp.left;
-        temp.left = node;
-        return temp;
-    }
+    abstract Node rotateLeft(Node node);
 
-    // the left left case
-    protected Node rotateRight(Node node) {
-        Node temp = node.left;
-        node.left = temp.right;
-        temp.right = node;
-        return temp;
-    }
-
-    // the left right case
-    protected Node rotateLeftRight(Node node) {
-        node.left = rotateLeft(node.left);
-        return rotateRight(node);
-    }
-
-    // the right left case
-    protected Node rotateRightLeft(Node node) {
-        node.right = rotateRight(node.right);
-        return rotateLeft(node);
-    }
+    abstract Node rotateRight(Node node);
 
     // just driver function for the printTree(Node node) function to give the client
     // interface to print the tree

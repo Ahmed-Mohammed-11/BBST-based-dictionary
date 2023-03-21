@@ -1,7 +1,7 @@
 public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
 
     // the right right case
-    Node rotateLeft(Node node) {
+    protected Node rotateLeft(Node node) {
         Node temp = node.right;
         node.right = temp.left;
         temp.left = node;
@@ -11,7 +11,7 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
     }
 
     // the left left case
-    Node rotateRight(Node node) {
+    protected Node rotateRight(Node node) {
         Node temp = node.left;
         node.left = temp.right;
         temp.right = node;
@@ -20,7 +20,7 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return temp;
     }
 
-    public void update(Node node) {
+    protected void update(Node node) {
         // initialize the height to -1 (nothing)
         int leftHeight = -1;
         int rightHeight = -1;
@@ -40,7 +40,7 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
     }
 
     // make sure the tree is balanced and the bf invariant is maintained
-    public Node rebalance(Node node) {
+    protected Node rebalance(Node node) {
         if (node.balanceFactor > 1) {
 
             if (node.left.balanceFactor < 0) {
@@ -61,7 +61,25 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return node;
     }
 
-    public Node insert(Node node, Any key) {
+    public boolean insert(Any key) {
+        // if the key is null, return false
+
+        if (key == null)
+            return false;
+
+        // check if the tree contains the key and if it doesn't then insert it and
+        // return true
+        if (search(root, key) == false) {
+            root = insert(root, key);
+            size++;
+            return true;
+        }
+
+        // if the tree already contains the key, return false
+        return false;
+    }
+
+    protected Node insert(Node node, Any key) {
         // if the node is null, return a new node with the key
         if (node == null)
             return new Node(key);
@@ -83,24 +101,6 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return rebalance(node);
     }
 
-    public boolean insert(Any key) {
-        // if the key is null, return false
-
-        if (key == null)
-            return false;
-
-        // check if the tree contains the key and if it doesn't then insert it and
-        // return true
-        if (search(root, key) == false) {
-            root = insert(root, key);
-            size++;
-            return true;
-        }
-
-        // if the tree already contains the key, return false
-        return false;
-    }
-
     public boolean delete(Any key) {
         // if the key is null then return false
         if (key == null) {
@@ -118,7 +118,7 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         return false;
     }
 
-    public Node delete(Node node, Any key) {
+    protected Node delete(Node node, Any key) {
         // if the node is null then return null (base case)
         if (node == null) {
             return null;
@@ -161,88 +161,4 @@ public class AVL<Any extends Comparable<Any>> extends Tree<Any> {
         update(node);
         return rebalance(node);
     }
-
-
-
-        // uncomment this code for testing purposes
-
-        // AVL<Integer> tree = new AVL<Integer>();
-        // System.out.println("inserting 4 is : " + tree.insert(4));
-        // System.out.println("inserting 6 is : " + tree.insert(6));
-        // System.out.println("inserting 10 is : " + tree.insert(10));
-        // System.out.println("inserting 15 is : " + tree.insert(15));
-        // System.out.println("inserting 13 is : " + tree.insert(13));
-        // System.out.println("inserting 22 is : " + tree.insert(22));
-        // System.out.println("inserting 19 is : " + tree.insert(19));
-        // System.out.println("inserting 11 is : " + tree.insert(11));
-        // System.out.println("inserting 27 is : " + tree.insert(27));
-        // System.out.println("inserting 34 is : " + tree.insert(34));
-        // System.out.println("delete 10 is : " + tree.delete(10));
-        // System.out.println("found 2 : " + tree.search(2));
-        // System.out.println("inserting 2 is : " + tree.insert(2));
-        // System.out.println("number of nodes in this tree is : " + tree.size());
-        // System.out.println("height of tree is : " + tree.height());
-        // System.out.println("found 1 : " + tree.search(1));
-        // tree.printTree();
-        // System.out.println("inserting 1 is : " + tree.insert(1));
-        // System.out.println("inserting 12 is : " + tree.insert(12));
-        // System.out.println("number of nodes in this tree is : " + tree.size());
-        // System.out.println("delete 12 is : " + tree.delete(12));
-        // System.out.println("inserting 8 is : " + tree.insert(8));
-        // System.out.println("found 12 : " + tree.search(12));
-        // tree.printTree();
-        // System.out.println("number of nodes in this tree is : " + tree.size());
-        // System.out.println("delete 4 is : " + tree.delete(4));
-        // System.out.println("delete 16 is : " + tree.delete(16));
-        // System.out.println("height of tree is : " + tree.height());
-        // System.out.println("delete 8 is : " + tree.delete(8));
-        // System.out.println("height of tree is : " + tree.height());
-        // System.out.println("delete 2 is : " + tree.delete(2));
-        // System.out.println("delete 1 is : " + tree.delete(1));
-        // System.out.println("height of tree is : " + tree.height());
-        // System.out.println("delete 6 is : " + tree.delete(6));
-        // System.out.println("height of tree is : " + tree.height());
-        // System.out.println("number of node in this tree is : " + tree.size());
-        // tree.printTree();
-
-        /*
-         * expected output is
-         * inserting 4 is : true
-         * inserting 6 is : true
-         * inserting 10 is : true
-         * inserting 15 is : true
-         * inserting 13 is : true
-         * inserting 22 is : true
-         * inserting 19 is : true
-         * inserting 11 is : true
-         * inserting 27 is : true
-         * inserting 34 is : true
-         * delete 10 is : true
-         * found 2 : false
-         * inserting 2 is : true
-         * number of nodes in this tree is : 10
-         * height of tree is : 3
-         * found 1 : false
-         * [2, 4, 6, 11, 13, 15, 19, 22, 27, 34]
-         * inserting 1 is : true
-         * inserting 12 is : true
-         * number of nodes in this tree is : 12
-         * delete 12 is : true
-         * inserting 8 is : true
-         * found 12 : false
-         * [1, 2, 4, 6, 8, 11, 13, 15, 19, 22, 27, 34]
-         * number of nodes in this tree is : 12
-         * delete 4 is : true
-         * delete 16 is : false
-         * height of tree is : 3
-         * delete 8 is : true
-         * height of tree is : 3
-         * delete 2 is : true
-         * delete 1 is : true
-         * height of tree is : 3
-         * delete 6 is : true
-         * height of tree is : 2
-         * number of node in this tree is : 7
-         * [11, 13, 15, 19, 22, 27, 34]
-         */
-    }
+}

@@ -170,7 +170,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 			if (leftLeaning) s = (RBNode) x.p.right;
 			else s = (RBNode) x.p.left;
 
-			if (!s.black)
+			if (!s.black) //Case 1
 			{
 				s.black = true;
 				x.p.black = false;
@@ -184,47 +184,47 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 					rotateRight(x.p);
 					s = (RBNode) x.p.left;
 				}
-
-				if (((RBNode)s.left).black && ((RBNode)s.right).black)
+			}// End of case 1
+			if (((RBNode)s.left).black && ((RBNode)s.right).black) //Case 2
+			{
+				s.black = false;
+				x = x.p;
+				continue; //End of case 2
+			}
+			else
+			{
+				if (leftLeaning && ((RBNode)s.right).black)//Case 3
 				{
+					RBNode c = (RBNode) s.left;
+					c.black = true;
 					s.black = false;
-					x = x.p;
-					continue;
+					rotateRight(s);
+					s = (RBNode)x.p.right;
+				}
+				else if (!leftLeaning && ((RBNode)s.left).black)
+				{
+					RBNode c = (RBNode) s.right;
+					c.black = true;
+					s.black = false;
+					rotateLeft(s);
+					s = (RBNode) x.p.left;
+				} //End of case 3
+				//Case 4
+				s.black = x.p.black;
+				x.p.black = true;
+				RBNode c;
+				if (leftLeaning)
+				{
+					c = (RBNode) s.right;
+					rotateLeft(x.p);
 				}
 				else
 				{
-					if (leftLeaning && ((RBNode)s.right).black)
-					{
-						RBNode c = (RBNode) s.left;
-						c.black = true;
-						s.black = false;
-						rotateRight(s);
-						s = (RBNode)x.p.right;
-					}
-					else if (!leftLeaning && ((RBNode)s.left).black)
-					{
-						RBNode c = (RBNode) s.right;
-						c.black = true;
-						s.black = false;
-						rotateLeft(s);
-						s = (RBNode) x.p.left;
-					}
-					s.black = x.p.black;
-					x.p.black = true;
-					RBNode c;
-					if (leftLeaning)
-					{
-						c = (RBNode) s.right;
-						rotateLeft(x.p);
-					}
-					else
-					{
-						c = (RBNode) s.left;
-						rotateRight(x.p);
-					}
-					c.black = true;
-					x = (RBNode)root;
+					c = (RBNode) s.left;
+					rotateRight(x.p);
 				}
+				c.black = true;
+				x = (RBNode)root;
 			}
 		}
 		x.black = true;

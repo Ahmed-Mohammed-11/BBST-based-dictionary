@@ -306,6 +306,14 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		}
 	}
 
+
+	public void printTree()
+	{
+		System.out.println(getKeysAscending());
+	}
+
+
+
 	//Methods that won't be used.
 
 	protected Node delete(Node n, Any key){return null;}

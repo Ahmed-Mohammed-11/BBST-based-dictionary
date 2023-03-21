@@ -309,4 +309,6 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	protected Node delete(Node n, Any key){return null;}
 	protected Node insert(Node n, Any key){return null;}
 	protected void update(Node n){}
+	protected Node rotateLeft(Node n){return null;}
+	protected Node rotateRight(Node n){return null;}
 }

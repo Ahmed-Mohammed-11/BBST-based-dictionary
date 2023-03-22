@@ -126,6 +126,12 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	//Fix Red black tree properties after delete
 	public boolean delete(Any key)
 	{
+		if (size == 1 && key.compareTo(root.key) == 0)
+		{
+			size = 0;
+			root = nil;
+			return true;
+		}
 		RBNode current = (RBNode)root;
 		while(current != nil)
 		{
@@ -155,7 +161,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		if (current == current.p.left) current.p.left = child;
 		else current.p.right = child;
 		child.p = current.p;
-		// if (current == root) root = child;
+		if (current == root) root = child;
 		if (current.black) deleteFixUp(child);
 		size--;
 		return true;

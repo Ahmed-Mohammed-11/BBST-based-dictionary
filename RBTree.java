@@ -236,6 +236,19 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 		x.black = true;
 	}
 
+	public boolean search(Any key)
+	{
+		Node current = root;
+		while(current != nil)
+		{
+			int compareResult = key.compareTo(current.key); 
+			if (compareResult < 0) current = (RBNode)current.left;
+			else if(compareResult > 0) current = (RBNode)current.right;
+			else return true;
+		}
+		return false;
+	}
+
 
 
 	void rotateLeft(RBNode n)

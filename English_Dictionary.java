@@ -98,7 +98,9 @@ public class English_Dictionary {
                 batch.add("E");
                 break;
             } else {
-                batch.add(w);
+                if ( !w.isEmpty()) {
+                    batch.add(w);
+                }
             }
         }
         return batch;

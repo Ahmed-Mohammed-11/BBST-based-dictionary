@@ -255,7 +255,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	{
 		if (n.right == nil) 
 		{
-			System.out.printf("WARNING! LEFT ROTATE AT %d IS FUTILE! RIGHT CHILD IS NIL.\n", n.key);
+			System.out.print("WARNING! LEFT ROTATE AT "+ n.key + " IS FUTILE! RIGHT CHILD IS NIL.\n");
 			return;
 		}
 		RBNode parent = n.p;

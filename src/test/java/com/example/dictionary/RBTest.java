@@ -3,6 +3,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class RBTest {
@@ -282,6 +289,33 @@ class RBTest {
         assertTrue(rb.search("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
         assertTrue(rb.delete("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
         assertFalse(rb.search("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
-    }   
+    }
+
+	@Test
+	void testOrderAfterManyDeletes()
+	{
+		HashSet<Integer> insertions = new HashSet<Integer>(100_000);
+		RBTree<Integer> tree = new RBTree<Integer>();
+		Random rng = new Random();
+		for (int i=0; i<100_000; i++)
+		{
+			int x = rng.nextInt(1_000_000);
+			insertions.add(x);
+			tree.insert(x);
+		}
+		while(insertions.size() > 1000)
+		{
+			int x = insertions.iterator().next();
+			tree.delete(x);
+			insertions.remove(x);
+		}
+		ArrayList<Integer> sorted = new ArrayList<Integer>(insertions);
+		Collections.sort(sorted);
+		ArrayList<Integer> treeKeys = tree.getKeysAscending();
+		for (int i=0; i<tree.size; i++)
+		{
+			assertEquals(treeKeys.get(i), sorted.get(i));
+		}
+	}
     
 }

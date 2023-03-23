@@ -180,22 +180,22 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 			if (!s.black) //Case 1
 			{
 				s.black = true;
-				x.p.black = false;
+				s.p.black = false;
 				if (leftLeaning)
 				{
-					rotateLeft(x.p);
+					rotateLeft(s.p);
 					s = (RBNode)x.p.right;
 				}
 				else
 				{
-					rotateRight(x.p);
+					rotateRight(s.p);
 					s = (RBNode) x.p.left;
 				}
 			}// End of case 1
 			if (((RBNode)s.left).black && ((RBNode)s.right).black) //Case 2
 			{
 				s.black = false;
-				x = x.p;
+				x = s.p;
 				continue; //End of case 2
 			}
 			else
@@ -206,7 +206,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 					c.black = true;
 					s.black = false;
 					rotateRight(s);
-					s = (RBNode)x.p.right;
+					s = (RBNode)s.p;
 				}
 				else if (!leftLeaning && ((RBNode)s.left).black)
 				{
@@ -214,21 +214,21 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 					c.black = true;
 					s.black = false;
 					rotateLeft(s);
-					s = (RBNode) x.p.left;
+					s = (RBNode) s.p;
 				} //End of case 3
 				//Case 4
-				s.black = x.p.black;
-				x.p.black = true;
+				s.black = s.p.black;
+				s.p.black = true;
 				RBNode c;
 				if (leftLeaning)
 				{
 					c = (RBNode) s.right;
-					rotateLeft(x.p);
+					rotateLeft(s.p);
 				}
 				else
 				{
 					c = (RBNode) s.left;
-					rotateRight(x.p);
+					rotateRight(s.p);
 				}
 				c.black = true;
 				x = (RBNode)root;
@@ -278,7 +278,7 @@ public class RBTree<Any extends Comparable<Any>> extends Tree<Any>
 	{
 		if (n.left == nil) 
 		{
-			// System.out.printf("WARNING! RIGHT ROTATE AT %d IS FUTILE! LEFT CHILD IS NIL.\n", n.key);
+			System.out.printf("WARNING! RIGHT ROTATE AT %d IS FUTILE! LEFT CHILD IS NIL.\n", n.key);
 			return;
 		}
 		RBNode parent = n.p;

@@ -31,10 +31,11 @@ public class CLI {
                 "Show choices-->9\n" +
                 "Make a new Dictionary-->10\n");
         while(st){
+            System.out.print("Enter your choice:");
             ch = sc.nextLine().replaceAll("\\ ", "");
             switch (ch){
                 case "1":
-                    System.out.println("Enter the word you want to insert:");
+                    System.out.print("Enter the word you want to insert:");
                     w = sc.nextLine().replaceAll("\\ ", "");
                     if (w.contains("(")||w.contains(")")||w.contains("[")||w.contains("]")||w.contains("{")||w.contains("}")){
                         System.out.println("please enter a valid word :(\n");
@@ -44,7 +45,7 @@ public class CLI {
                     }
                     break;
                 case "2":
-                    System.out.println("Enter the word you want to Delete");
+                    System.out.print("Enter the word you want to Delete");
                     w = sc.nextLine().replaceAll("\\ ", "");
                     if (w.contains("(")||w.contains(")")||w.contains("[")||w.contains("]")||w.contains("{")||w.contains("}")){
                         System.out.println("please enter a valid word :(\n");
@@ -54,7 +55,7 @@ public class CLI {
                     }
                     break;
                 case "3":
-                    System.out.println("Enter the word you want to Search for");
+                    System.out.print("Enter the word you want to Search for");
                     w = sc.nextLine().replaceAll("\\ ", "");
                     if (w.contains("(")||w.contains(")")||w.contains("[")||w.contains("]")||w.contains("{")||w.contains("}")){
                         System.out.println("please enter a valid word :(\n");
@@ -64,12 +65,12 @@ public class CLI {
                     }
                     break;
                 case "4":
-                    System.out.println("Enter the txt path:");
+                    System.out.print("Enter the txt path:");
                     w = sc.nextLine();
                     D.BInsert(w);
                     break;
                 case "5":
-                    System.out.println("Enter the txt path:");
+                    System.out.print("Enter the txt path:");
                     w = sc.nextLine();
                     D.BDelete(w);
                     break;
